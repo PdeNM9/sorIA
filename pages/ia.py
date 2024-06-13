@@ -14,9 +14,9 @@ st.title("Análise da Inicial.")
 system = prompt.prompt
 
 human = "{text}"
-prompt = ChatPromptTemplate.from_messages([("system", system), ("human", human)])
+chat_prompt = ChatPromptTemplate.from_messages([("system", system), ("human", human)])
 chat = ChatGroq(temperature=1, model_name="llama3-8b-8192")
-chain = prompt | chat
+chain = chat_prompt | chat
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -60,7 +60,7 @@ if uploaded_file is not None:
     # Salva a resposta completa no histórico
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-    # Divide a resposta em itens separados e exibe
+    # Exibe a resposta em itens separados
     respostas = full_response.split('\n')
     for resposta in respostas:
         if resposta.strip():  # Verifica se a resposta não está vazia
