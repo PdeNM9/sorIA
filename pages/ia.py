@@ -8,12 +8,12 @@ import io
 # Carrega variáveis de ambiente
 _ = load_dotenv(find_dotenv())
 
-st.title("Chat com Modelo de Linguagem - LangChain")
+st.title("Análise da Inicial.")
 
 # Configuração do prompt e do modelo
 system = """# Função e objetivo
 
-Você é um Juiz de Direito no Brasil. Seu objetivo é ler o arquivo e identificar informações.
+Você é um Juiz de Direito no Brasil. Seu objetivo é ler o arquivo e identificar informações. Você deve responder apenas com a informação identificada e em português do Brasil.
 
 # Passos
 
