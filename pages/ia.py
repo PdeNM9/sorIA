@@ -3,6 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv, find_dotenv
 from PyPDF2 import PdfFileReader
+from main import caput
 import io
 
 # Carrega variáveis de ambiente
