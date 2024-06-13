@@ -2,8 +2,8 @@ import streamlit as st
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv, find_dotenv
-from PyPDF2 import PdfReader
 import prompt
+import pdf
 
 # Carrega variáveis de ambiente
 _ = load_dotenv(find_dotenv())
@@ -12,7 +12,6 @@ st.title("Análise da Inicial.")
 
 # Configuração do prompt e do modelo
 system = prompt.prompt
-
 human = "{text}"
 chat_prompt = ChatPromptTemplate.from_messages([("system", system), ("human", human)])
 chat = ChatGroq(temperature=1, model_name="llama3-8b-8192")
@@ -26,19 +25,11 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Função para extrair texto do PDF
-def extract_text_from_pdf(pdf_file):
-    pdf_reader = PdfReader(pdf_file)
-    text = ""
-    for page in pdf_reader.pages:
-        text += page.extract_text()
-    return text
-
 # Upload do arquivo PDF
 uploaded_file = st.file_uploader("Envie o arquivo PDF", type=["pdf"])
 
 if uploaded_file is not None:
-    pdf_text = extract_text_from_pdf(uploaded_file)
+    pdf_text = pdf.extract_text_from_pdf(uploaded_file)
     st.session_state.messages.append({"role": "user", "content": "Arquivo PDF enviado e processado."})
     with st.chat_message("user"):
         st.markdown("Arquivo PDF enviado e processado.")
@@ -60,8 +51,5 @@ if uploaded_file is not None:
     # Salva a resposta completa no histórico
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-    # Exibe a resposta em itens separados
-    respostas = full_response.split('\n')
-    for resposta in respostas:
-        if resposta.strip():  # Verifica se a resposta não está vazia
-            st.chat_message("assistant").markdown(resposta.strip())
+    # Exibe a resposta como um único bloco
+    st.chat_message("assistant").markdown(full_response)
