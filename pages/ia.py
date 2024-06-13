@@ -6,6 +6,7 @@ from PyPDF2 import PdfFileReader
 from main import caput
 import io
 
+st.set_page_config(caput)
 # Carrega variáveis de ambiente
 _ = load_dotenv(find_dotenv())
 
