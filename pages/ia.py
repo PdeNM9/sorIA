@@ -84,7 +84,4 @@ if uploaded_file is not None:
     # Divide a resposta em itens separados
     respostas = full_response.split('\n')
     for resposta in respostas:
-        response_text.markdown(resposta.strip())
-
-# Exibe a resposta completa
-response_text.markdown(full_response)
+        st.chat_message("assistant").markdown(resposta.strip())
