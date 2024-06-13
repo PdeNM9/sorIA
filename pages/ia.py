@@ -2,11 +2,9 @@ import streamlit as st
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv, find_dotenv
-from PyPDF2 import PdfFileReader
-from main import caput
+from PyPDF2 import PdfReader
 import io
 
-st.set_page_config(caput)
 # Carrega variáveis de ambiente
 _ = load_dotenv(find_dotenv())
 
@@ -52,10 +50,9 @@ for message in st.session_state.messages:
 
 # Função para extrair texto do PDF
 def extract_text_from_pdf(pdf_file):
-    pdf_reader = PdfFileReader(pdf_file)
+    pdf_reader = PdfReader(pdf_file)
     text = ""
-    for page_num in range(pdf_reader.getNumPages()):
-        page = pdf_reader.getPage(page_num)
+    for page in pdf_reader.pages:
         text += page.extract_text()
     return text
 
