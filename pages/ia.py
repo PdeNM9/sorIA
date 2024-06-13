@@ -81,7 +81,8 @@ if uploaded_file is not None:
     # Salva a resposta completa no histórico
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-    # Divide a resposta em itens separados
+    # Divide a resposta em itens separados e exibe
     respostas = full_response.split('\n')
     for resposta in respostas:
-        st.chat_message("assistant").markdown(resposta.strip())
+        if resposta.strip():  # Verifica se a resposta não está vazia
+            st.chat_message("assistant").markdown(resposta.strip())
