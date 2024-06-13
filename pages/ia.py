@@ -3,7 +3,6 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv, find_dotenv
 from PyPDF2 import PdfReader
-import io
 
 # Carrega variáveis de ambiente
 _ = load_dotenv(find_dotenv())
@@ -61,9 +60,9 @@ uploaded_file = st.file_uploader("Envie o arquivo PDF", type=["pdf"])
 
 if uploaded_file is not None:
     pdf_text = extract_text_from_pdf(uploaded_file)
-    st.session_state.messages.append({"role": "user", "content": pdf_text})
+    st.session_state.messages.append({"role": "user", "content": "Arquivo PDF enviado e processado."})
     with st.chat_message("user"):
-        st.markdown(pdf_text)
+        st.markdown("Arquivo PDF enviado e processado.")
 
     # Adiciona um container para a resposta do modelo
     response_stream = chain.stream({"text": pdf_text})    

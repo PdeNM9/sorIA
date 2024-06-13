@@ -4,7 +4,7 @@ from annotated_text import annotated_text
 import re
 
 # Configuração da página deve ser a primeira coisa a ser chamada
-caput = st.set_page_config(page_title="Assessor 2.0!", page_icon="📣", layout="centered")
+st.set_page_config(page_title="Assessor 2.0!", page_icon="📣", layout="centered")
 import funcoes
 import variaveis
 
