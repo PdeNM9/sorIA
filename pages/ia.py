@@ -75,5 +75,11 @@ if uploaded_file is not None:
         full_response += str(partial_response.content)
         response_text.markdown(full_response + "▌")
 
+    # Corrige a resposta para remover o caractere de continuidade
+    full_response = full_response.replace("▌", "").strip()
+
     # Salva a resposta completa no histórico
     st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+    # Exibe a resposta completa
+    response_text.markdown(full_response)
