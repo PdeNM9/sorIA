@@ -36,7 +36,7 @@ Você é um Juiz de Direito no Brasil. Seu objetivo é ler o arquivo e identific
 
 human = "{text}"
 prompt = ChatPromptTemplate.from_messages([("system", system), ("human", human)])
-chat = ChatGroq(temperature=0.5, model_name="llama3-8b-8192")
+chat = ChatGroq(temperature=1, model_name="llama3-8b-8192")
 chain = prompt | chat
 
 if "messages" not in st.session_state:
