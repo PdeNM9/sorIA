@@ -1,0 +1,8 @@
+[connections.mysql]
+dialect = "mysql"
+host="db4free.net"
+port=3306
+username="pdenm9"
+password="4BjsK5Y@77Bm7p_"
+database="assessor2ponto0"
+driver = "pymysql"

@@ -2,6 +2,8 @@ import streamlit as st
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv, find_dotenv
+from PyPDF2 import PdfFileReader
+import io
 
 # Carrega variáveis de ambiente
 _ = load_dotenv(find_dotenv())
@@ -11,7 +13,7 @@ st.title("Chat com Modelo de Linguagem - LangChain")
 # Configuração do prompt e do modelo
 system = """# Função e objetivo
 
-Você é um Juiz de Direito no Brasil. Seu objetivo é ler o arquivo e indetificar informações.
+Você é um Juiz de Direito no Brasil. Seu objetivo é ler o arquivo e identificar informações.
 
 # Passos
 
@@ -46,14 +48,26 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Caixa de entrada para o usuário
-if user_input := st.chat_input("Você:"):
-    st.session_state.messages.append({"role": "user", "content": user_input})
+# Função para extrair texto do PDF
+def extract_text_from_pdf(pdf_file):
+    pdf_reader = PdfFileReader(pdf_file)
+    text = ""
+    for page_num in range(pdf_reader.getNumPages()):
+        page = pdf_reader.getPage(page_num)
+        text += page.extract_text()
+    return text
+
+# Upload do arquivo PDF
+uploaded_file = st.file_uploader("Envie o arquivo PDF", type=["pdf"])
+
+if uploaded_file is not None:
+    pdf_text = extract_text_from_pdf(uploaded_file)
+    st.session_state.messages.append({"role": "user", "content": pdf_text})
     with st.chat_message("user"):
-        st.markdown(user_input)
+        st.markdown(pdf_text)
 
     # Adiciona um container para a resposta do modelo
-    response_stream = chain.stream({"text": user_input})    
+    response_stream = chain.stream({"text": pdf_text})    
     full_response = ""
 
     response_container = st.chat_message("assistant")
