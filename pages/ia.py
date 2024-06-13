@@ -81,5 +81,10 @@ if uploaded_file is not None:
     # Salva a resposta completa no histórico
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
-    # Exibe a resposta completa
-    response_text.markdown(full_response)
+    # Divide a resposta em itens separados
+    respostas = full_response.split('\n')
+    for resposta in respostas:
+        response_text.markdown(resposta.strip())
+
+# Exibe a resposta completa
+response_text.markdown(full_response)
